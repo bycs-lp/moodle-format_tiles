@@ -1437,6 +1437,7 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
     height: 30px;
 }
 .format-tiles .embed_cm_modal .embed_file_button,
+.format-tiles .embed_cm_modal .button_toggle_fullwidth,
 .format-tiles .modal-container .modal .modal-header button.close {
     display: inline-block;
     width: 28px;
@@ -1451,13 +1452,17 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
     text-align: center;
     box-shadow: none;
 }
-.format-tiles .embed_cm_modal .embed_file_button.button_download {
+.format-tiles .embed_cm_modal .button_toggle_fullwidth {
     position: absolute;
     right: 70px;
 }
-.format-tiles .embed_cm_modal .embed_file_button.button_expand {
+.format-tiles .embed_cm_modal .embed_file_button.button_download {
     position: absolute;
     right: 105px;
+}
+.format-tiles .embed_cm_modal .embed_file_button.button_expand {
+    position: absolute;
+    right: 140px;
 }
 .format-tiles .modal-container .modal .modal-header button.close {
     font-size: 1.8em;
