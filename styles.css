@@ -1485,6 +1485,7 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
     color: #fff;
 }
 .format-tiles .embed_cm_modal .embed_file_button,
+.format-tiles .embed_cm_modal .button_toggle_fullwidth,
 .format-tiles .modal-container .modal .modal-header button.close {
     display: inline-block;
     width: 28px;
