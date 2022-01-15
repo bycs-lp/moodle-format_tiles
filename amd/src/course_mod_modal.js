@@ -59,6 +59,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
             ACTIVITY: "li.activity",
             URLACTIVITYPOPUPLINK: ".activity.modtype_url.urlpopup a",
             newWindowButton: ".button_expand",
+            toggleFullWidthButton: ".button_toggle_fullwidth",
             modalHeader: ".modal-header",
             embedModuleButtons: ".embed-module-buttons",
             iframe: "iframe"
@@ -199,6 +200,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                 Templates.render("format_tiles/embed_module_modal_header_btns", templateData).done(function (html) {
                     modalRoot.find(Selector.modalHeader).append(html);
                     modalRoot.find(Selector.closeBtn).detach().appendTo(modalRoot.find(Selector.embedModuleButtons));
+                    registerModalFullWidthToggler(modalRoot, LaunchModalDataActions.launchResourceModal);
                 }).fail(Notification.exception);
 
                 return true;
@@ -279,6 +281,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                 Templates.render("format_tiles/embed_module_modal_header_btns", templateData).done(function (html) {
                     modalRoot.find(Selector.modalHeader).append(html);
                     modalRoot.find(Selector.closeBtn).detach().appendTo(modalRoot.find(Selector.embedModuleButtons));
+                    registerModalFullWidthToggler(modalRoot, LaunchModalDataActions.launchUrlModal);
                 }).fail(Notification.exception);
 
                 // Listen to see if user clicks to view the modal contents in a new window.  Dismiss modal if so.
@@ -376,6 +379,56 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
             }
         };
 
+        /**
+         * Register the handler for the button to toggle full width of the modal.
+         * @param {object} modalRoot the modal root containing the button to add the handler to
+         * @param {string} launchModalDataAction the type of modal we are registering the toggler for
+         */
+        const registerModalFullWidthToggler = (modalRoot, launchModalDataAction) => {
+            let maxWidthIfNotFullWidth;
+            switch (launchModalDataAction) {
+                case LaunchModalDataActions.launchResourceModal:
+                    // This also shrinks full width embedded html pages. That's not a problem, however, as you can easily resize.
+                    maxWidthIfNotFullWidth = () => modalMinWidth();
+                    break;
+                case LaunchModalDataActions.launchModuleModal:
+                    // No default is given, so we decide to use modalMinWidth().
+                    maxWidthIfNotFullWidth = () => modalMinWidth();
+                    break;
+                case LaunchModalDataActions.launchUrlModal:
+                    maxWidthIfNotFullWidth = () => Math.round(win.width() * 0.9);
+                    break;
+                default:
+                    maxWidthIfNotFullWidth = () => modalMinWidth();
+            }
+
+            let resizeTimer;
+            win.resize(() => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    modalRoot.find(Selector.modalDialog).css("max-width", maxWidthIfNotFullWidth());
+                }, 500);
+            });
+            modalRoot.find(Selector.toggleFullWidthButton).click((event) => {
+                const toggleLink = event.target;
+                if (toggleLink.classList.contains('fa-chevron-right')) {
+                    toggleLink.classList.remove('fa-chevron-right');
+                    toggleLink.classList.add('fa-chevron-left');
+                } else {
+                    toggleLink.classList.remove('fa-chevron-left');
+                    toggleLink.classList.add('fa-chevron-right');
+                }
+
+                const currentMaxWidth = modalRoot.find(Selector.modalDialog).css('max-width');
+                const newMaxWidth = currentMaxWidth !== '100%' ? '100%' : maxWidthIfNotFullWidth();
+                modalRoot.find(Selector.modalDialog).animate({"max-width": newMaxWidth}, "fast");
+                // In case we're displaying an embedded link including an iframe, we have also have to apply
+                // the new width to the body and the iframe itself.
+                modalRoot.find(Selector.modalBody).animate({"max-width": newMaxWidth}, "fast");
+                modalRoot.find("iframe").attr("width", newMaxWidth);
+            });
+        };
+
         // TODO refactor these to avoid repetition.
         /**
          * Launch a Course activity Modal if we have it already, or make one and launch e.g. for "Page"
@@ -433,6 +486,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                     Templates.render("format_tiles/embed_module_modal_header_btns", templateData).done(function (html) {
                         modalRoot.find(Selector.modalHeader).append(html);
                         modalRoot.find(Selector.closeBtn).detach().appendTo(modalRoot.find(Selector.embedModuleButtons));
+                        registerModalFullWidthToggler(modalRoot, LaunchModalDataActions.launchModuleModal);
                     }).fail(Notification.exception);
 
                     // Allow a short delay before we resize the modal, and check a few times, as content may be loading.
