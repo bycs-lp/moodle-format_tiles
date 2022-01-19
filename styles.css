@@ -2037,3 +2037,17 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
 .format-tiles .moveablesection .availabilityinfo i {
     font-size: 1.2em;
 }
+
+.format-tiles .newactivities {
+    position: absolute;
+    padding-left: 1rem;
+    padding-right: 0.3rem;
+    right: 0px;
+    bottom: 10px;
+    display: inline-block;
+    background:#c35b42;
+    color:white;
+    -webkit-clip-path:polygon(0 0, 100% 0%, 100% 100%, 0 100%, 20% 50%);
+    clip-path:polygon(0 0, 100% 0%, 100% 100%, 0 100%, 20% 50%);
+}
+
