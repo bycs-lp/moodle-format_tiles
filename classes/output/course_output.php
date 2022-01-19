@@ -344,7 +344,7 @@ class course_output implements \renderable, \templatable {
         // Custom course settings not in course object if called from AJAX, so make sure we get them.
         $options = [
             'defaulttileicon', 'basecolour', 'courseusesubtiles', 'courseshowtileprogress',
-            'displayfilterbar', 'usesubtilesseczero', 'courseusebarforheadings'
+            'displayfilterbar', 'usesubtilesseczero', 'courseusebarforheadings', 'courseshownewactivities'
         ];
         $data = [];
         if (!$fromajax) {
@@ -480,6 +480,13 @@ class course_output implements \renderable, \templatable {
         $previoustiletitle = '';
         $countincludedsections = 0;
         $uselinebreakfilter = get_config('format_tiles', 'enablelinebreakfilter');
+
+        if ($this->courseformatoptions['courseshownewactivities']) {
+            $newactivities = $this->get_new_activity_sections();
+        } else {
+            $newactivities = [];
+        }
+
         foreach ($this->modinfo->get_section_info_all() as $sectionnum => $section) {
             // Show the section if the user is permitted to access it, OR if it's not available
             // but there is some available info text which explains the reason & should display,
@@ -538,7 +545,8 @@ class course_output implements \renderable, \templatable {
                     'titleclass' => strlen($title) >= $longtitlelength ? ' longtitle' : '',
                     'progress' => false,
                     'isactive' => $this->course->marker == $section->section,
-                    'extraclasses' => ''
+                    'extraclasses' => '',
+                    'newactivities' => isset($newactivities[$section->id])
                 );
 
                 // If photo tile backgrounds are allowed by site admin, prepare them for this tile.
@@ -1332,4 +1340,39 @@ class course_output implements \renderable, \templatable {
 
         return false;
     }
+
+    /**
+     * Checks whether there has been new activity.
+     * @return array
+     */
+    private function get_new_activity_sections(): array {
+        global $USER, $DB;
+
+        $sectionsupdated = [];
+        if (isset($USER->lastcourseaccess[$this->course->id])) {
+            $this->course->lastaccess = $USER->lastcourseaccess[$this->course->id];
+        } else {
+            $this->course->lastaccess = 0;
+        }
+
+        $params = [
+            'courseid' => $this->course->id,
+            'lastaccess' => $this->course->lastaccess
+        ];
+
+        $activity = $DB->get_records_select(
+            'course_modules',
+            'course = :courseid AND visibleoncoursepage = 1 AND deletioninprogress = 0 AND added > :lastaccess',
+            $params,
+            '',
+            'DISTINCT section'
+        );
+
+        foreach ($activity as $record) {
+            $sectionsupdated[$record->section] = true;
+        }
+
+        return $sectionsupdated;
+    }
+
 }
