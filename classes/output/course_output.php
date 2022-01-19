@@ -378,7 +378,7 @@ class course_output implements \renderable, \templatable {
         // Custom course settings not in course object if called from AJAX, so make sure we get them.
         $options = [
             'defaulttileicon', 'basecolour', 'courseusesubtiles', 'courseshowtileprogress',
-            'displayfilterbar', 'usesubtilesseczero', 'courseusebarforheadings',
+            'displayfilterbar', 'usesubtilesseczero', 'courseusebarforheadings', 'courseshownewactivities',
         ];
         $data = [];
         if (!$fromajax) {
@@ -521,6 +521,13 @@ class course_output implements \renderable, \templatable {
         $previoustiletitle = '';
         $countincludedsections = 0;
         $uselinebreakfilter = get_config('format_tiles', 'enablelinebreakfilter');
+
+        if ($this->courseformatoptions['courseshownewactivities']) {
+            $newactivities = $this->get_new_activity_sections();
+        } else {
+            $newactivities = [];
+        }
+
         $secsall = $this->modinfo->get_section_info_all();
         if (count($secsall) <= 1) {
             // We only have section zero.
@@ -590,6 +597,7 @@ class course_output implements \renderable, \templatable {
                     'progress' => false,
                     'isactive' => $this->course->marker == $section->section,
                     'extraclasses' => "tilestyle-$tilestyle ",
+                    'newactivities' => isset($newactivities[$section->id]),
                 ];
 
                 // If photo tile backgrounds are allowed by site admin, prepare them for this tile.
@@ -1227,4 +1235,39 @@ class course_output implements \renderable, \templatable {
         }
         return false;
     }
+
+    /**
+     * Checks whether there has been new activity.
+     * @return array
+     */
+    private function get_new_activity_sections(): array {
+        global $USER, $DB;
+
+        $sectionsupdated = [];
+        if (isset($USER->lastcourseaccess[$this->course->id])) {
+            $this->course->lastaccess = $USER->lastcourseaccess[$this->course->id];
+        } else {
+            $this->course->lastaccess = 0;
+        }
+
+        $params = [
+            'courseid' => $this->course->id,
+            'lastaccess' => $this->course->lastaccess
+        ];
+
+        $activity = $DB->get_records_select(
+            'course_modules',
+            'course = :courseid AND visibleoncoursepage = 1 AND deletioninprogress = 0 AND added > :lastaccess',
+            $params,
+            '',
+            'DISTINCT section'
+        );
+
+        foreach ($activity as $record) {
+            $sectionsupdated[$record->section] = true;
+        }
+
+        return $sectionsupdated;
+    }
+
 }
