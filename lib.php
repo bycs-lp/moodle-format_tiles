@@ -357,6 +357,7 @@ class format_tiles extends core_courseformat\base {
                 'courseshowtileprogress' => ['default' => 0, 'type' => PARAM_INT],
                 'displayfilterbar' => ['default' => 0, 'type' => PARAM_INT],
                 'courseusebarforheadings' => ['default' => 1, 'type' => PARAM_INT],
+                'courseshownewactivities' => ['default' => 1, 'type' => PARAM_INT],
             ];
             if ((get_config('format_tiles', 'followthemecolour'))) {
                 unset($courseformatoptions['basecolour']);
@@ -452,6 +453,15 @@ class format_tiles extends core_courseformat\base {
                 'element_type' => 'advcheckbox',
                 'element_attributes' => [get_string('yes')],
                 'help' => 'courseusebarforheadings',
+                'help_component' => 'format_tiles',
+            ];
+            $courseformatoptionsedit['courseshownewactivities'] = [
+                'label' => new lang_string(
+                    'courseshownewactivities', 'format_tiles'
+                ),
+                'element_type' => 'advcheckbox',
+                'element_attributes' => array(get_string('yes')),
+                'help' => 'courseshownewactivities',
                 'help_component' => 'format_tiles',
             ];
             if ($allowsubtilesview) {
