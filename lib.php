@@ -380,6 +380,10 @@ class format_tiles extends core_courseformat\base {
                 'courseusebarforheadings' => array(
                     'default' => 1,
                     'type' => PARAM_INT,
+                ),
+                'courseshownewactivities' => array(
+                    'default' => 1,
+                    'type' => PARAM_INT,
                 )
             );
             if ((get_config('format_tiles', 'followthemecolour'))) {
@@ -483,6 +487,15 @@ class format_tiles extends core_courseformat\base {
                 'element_type' => 'advcheckbox',
                 'element_attributes' => array(get_string('yes')),
                 'help' => 'courseusebarforheadings',
+                'help_component' => 'format_tiles',
+            );
+            $courseformatoptionsedit['courseshownewactivities'] = array(
+                'label' => new lang_string(
+                    'courseshownewactivities', 'format_tiles'
+                ),
+                'element_type' => 'advcheckbox',
+                'element_attributes' => array(get_string('yes')),
+                'help' => 'courseshownewactivities',
                 'help_component' => 'format_tiles',
             );
             if ($allowsubtilesview) {
