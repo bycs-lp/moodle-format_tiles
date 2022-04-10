@@ -56,6 +56,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
             moodleMediaPlayer: ".mediaplugin_videojs",
             urlModalLoadWarning: "#embed-url-error-msg-",
             closeBtn: "button.close",
+            embedCloseButtonContainer: ".button_close",
             ACTIVITY: "li.activity",
             URLACTIVITYPOPUPLINK: ".activity.modtype_url.urlpopup a",
             newWindowButton: ".button_expand",
@@ -199,7 +200,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                 }
                 Templates.render("format_tiles/embed_module_modal_header_btns", templateData).done(function (html) {
                     modalRoot.find(Selector.modalHeader).append(html);
-                    modalRoot.find(Selector.closeBtn).detach().appendTo(modalRoot.find(Selector.embedModuleButtons));
+                    modalRoot.find(Selector.closeBtn).detach().appendTo(modalRoot.find(Selector.embedCloseButtonContainer));
                     registerModalFullWidthToggler(modalRoot, LaunchModalDataActions.launchResourceModal);
                 }).fail(Notification.exception);
 
@@ -280,7 +281,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                 }
                 Templates.render("format_tiles/embed_module_modal_header_btns", templateData).done(function (html) {
                     modalRoot.find(Selector.modalHeader).append(html);
-                    modalRoot.find(Selector.closeBtn).detach().appendTo(modalRoot.find(Selector.embedModuleButtons));
+                    modalRoot.find(Selector.closeBtn).detach().appendTo(modalRoot.find(Selector.embedCloseButtonContainer));
                     registerModalFullWidthToggler(modalRoot, LaunchModalDataActions.launchUrlModal);
                 }).fail(Notification.exception);
 
@@ -485,7 +486,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                     modal.setBody(templateData.content);
                     Templates.render("format_tiles/embed_module_modal_header_btns", templateData).done(function (html) {
                         modalRoot.find(Selector.modalHeader).append(html);
-                        modalRoot.find(Selector.closeBtn).detach().appendTo(modalRoot.find(Selector.embedModuleButtons));
+                        modalRoot.find(Selector.closeBtn).detach().appendTo(modalRoot.find(Selector.embedCloseButtonContainer));
                         registerModalFullWidthToggler(modalRoot, LaunchModalDataActions.launchModuleModal);
                     }).fail(Notification.exception);
 
