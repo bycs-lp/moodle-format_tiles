@@ -1115,7 +1115,7 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
     padding: 2em;
 }
 .format-tiles .modal-container.embed_cm_modal .modal-header {
-    padding: 5px 10px 5px 10px;
+    padding: 0 10px 0 10px;
     opacity: 0.8;
     border-bottom: 0;
     text-shadow: none;
@@ -1128,7 +1128,8 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
 }
 /*Different themes have these classes slightly differently so repeat some of these*/
 .format-tiles .embed_cm_modal .modal-header {
-    padding: 5px 10px 5px 10px;
+    padding: 0 10px 0 10px;
+    align-items: center;
 }
 .format-tiles .modal-container.embed_cm_modal .modal .modal-header h3 {
     color: #fff;
@@ -1427,10 +1428,7 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
     height: 30px;
     width: 30px;
     padding-left: 0;
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    right: 35px;
+    border: 0;
 }
 .format-tiles .completioncheckbox.completion-auto {
     opacity: 0.6;
@@ -1453,16 +1451,18 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
     box-shadow: none;
 }
 .format-tiles .embed_cm_modal .button_toggle_fullwidth {
-    position: absolute;
-    right: 70px;
+    /* Properly align the chevron */
+    padding-left: 5px;
+    font-size: 1.2em;
+}
+.format-tiles .embed_cm_modal .button_close {
+    /* nothing to style yet */
 }
 .format-tiles .embed_cm_modal .embed_file_button.button_download {
-    position: absolute;
-    right: 105px;
+    /* nothing to style yet */
 }
 .format-tiles .embed_cm_modal .embed_file_button.button_expand {
-    position: absolute;
-    right: 140px;
+    /* nothing to style yet */
 }
 .format-tiles .modal-container .modal .modal-header button.close {
     font-size: 1.8em;
@@ -1472,25 +1472,20 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
 }
 .format-tiles .modal-container .modal .modal-header .embed-module-buttons .close {
     /*Clean theme.*/
-    position: relative;
-    top: unset;
-    right: unset;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 .format-tiles .embed-module-buttons {
     min-width: 125px;
-    text-align: right;
-    top: 5px;
-    position: absolute;
     right: 5px;
-    vertical-align: top;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }
 .format-tiles .embed-module-buttons button.close {
     width: 28px;
     height: 28px;
-    float: none;
-    position: absolute;
-    top: 3px;
-    right: 5px;
 }
 .format-tiles .embed-module-buttons .completion-icon {
     opacity: 1;
