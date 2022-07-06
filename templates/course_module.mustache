@@ -197,7 +197,9 @@
              {{/editing}}
             {{#completionInUseForCm}}
                 {{#completionenabled}}
-                    {{>format_tiles/completion_icon}}
+                    {{#hascompletion}}
+                        {{>format_tiles/completion_icon}}
+                    {{/hascompletion}}
                 {{/completionenabled}}
             {{/completionInUseForCm}}
         </span>
