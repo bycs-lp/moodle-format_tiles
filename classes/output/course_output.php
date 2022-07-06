@@ -1432,7 +1432,7 @@ class course_output implements \renderable, \templatable
      * @return bool whether it's to be treated as a label or not.
      */
     private function treat_as_label($mod) {
-        return array_search($mod->modname, $this->format->labellikecoursemods) !== false;
+        return is_null($mod->url);
     }
 
     /**
