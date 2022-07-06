@@ -159,7 +159,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                     completionstring: ''
                 };
                 // If it's a PDF in this modal, change from the defaults assigned above.
-                if (clickedCmObject.attr('data-modtype') === "resource_pdf") {
+                if (clickedCmObject.attr('data-modtype') === "resource" && clickedCmObject.hasClass('pdf')) {
                     templateData.objectType = 'application/pdf';
                 }
 
@@ -167,7 +167,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                     modal.setBody(html);
                     modalRoot.find(Selector.modalBody).animate({"min-height": Math.round(win.height() - 60)}, "fast");
 
-                    if (clickedCmObject.attr('data-modtype') === "resource_html") {
+                    if (clickedCmObject.attr('data-modtype') === "resource" && clickedCmObject.hasClass('html')) {
                         // HTML files only - set widths to 100% since they may contain embedded videos etc.
                         modalRoot.find(Selector.modal).animate({"max-width": "100%"}, "fast");
                         modalRoot.find(Selector.modalDialog).animate({"max-width": "100%"}, "fast");
