@@ -41,15 +41,6 @@ require_once($CFG->dirroot . '/course/format/lib.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_tiles extends core_courseformat\base {
-
-    /**
-     *  We want to treat label and plugins that behave like labels as labels.
-     * E.g. we don't render them as subtiles but show their content directly on page.
-     * This includes plugins like mod_customlabel and mod_unilabel, as defined here.
-     * @var []
-     */
-    public $labellikecoursemods = ['label', 'customlabel', 'unilabel', 'datalynxcoursepage'];
-
     /**
      * Creates a new instance of class
      *
