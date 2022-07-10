@@ -37,13 +37,15 @@
         tileid - tile id in course
         courseid - cours id
         restricted - is the tile restricted?
+        newactivities - were activities added since last visit in course?
 
     Example context (json):
     {   "hidden": 0,
         "isactive": 1,
         "tileid": 3,
         "courseid": 5,
-        "restricted": 0
+        "restricted": 0,
+        "newactivities": 1
         }
 }}
 <li class="tile{{#hidden}} tile-hidden{{/hidden}}{{#restricted}} tile-restricted{{/restricted}}{{#isactive}} current{{/isactive}}{{#userclickable}} tile-clickable{{/userclickable}} {{extraclasses}}"
@@ -65,6 +67,9 @@
                     {{#progress}}{{^hidden}}
                         {{> format_tiles/progress}}
                     {{/hidden}}{{/progress}}
+                    {{#newactivities}}
+                        {{> format_tiles/newactivities}}
+                    {{/newactivities}}
                 </div>
             </div>
             <div class="tile-text" id="tileText-{{tileid}}"
@@ -91,7 +96,9 @@
                         {{> format_tiles/progress}}
                     {{/progress}}
                 {{/showprogresssphototiles}}
-
+                {{#newactivities}}
+                    {{> format_tiles/newactivities}}
+                {{/newactivities}}
             <div id="tileText-{{tileid}}"
                  {{#activity_summary}}{{^ismobile}}{{#usetooltips}}
                     data-original-title="{{activity_summary}}" data-toggle="tooltip" data-html="true"
