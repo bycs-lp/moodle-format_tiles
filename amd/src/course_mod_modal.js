@@ -145,7 +145,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                     pluginfileUrl: clickedCmObject.attr("data-url"),
                     objectType: "text/html",
                     width: "100%",
-                    height: Math.round(win.height() - 60), // Embedded object height in modal - make as high as poss.
+                    height: Math.round(win.height() - 90), // Embedded object height in modal - make as high as poss.
                     cmid: cmid,
                     tileid: sectionNum,
                     isediting: 0,
@@ -351,7 +351,8 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                 var iframeHeight = Math.min($(iframe).height(), win.height());
                 var modalBody = modalRoot.find(Selector.modalBody);
                 if (iframeHeight > modalBody.height() - MODAL_MARGIN) {
-                    modalBody.animate({"min-height": Math.min(iframeHeight + MODAL_MARGIN, win.height()) + 1}, "fast");
+                    modalBody.animate({"min-height": Math.min(iframeHeight + MODAL_MARGIN,
+                            win.height() * 0.9 - 30) + 1}, "fast");
                 }
                 stopAllVideosOnDismiss(modalRoot);
             });
