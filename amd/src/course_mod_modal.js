@@ -161,7 +161,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                         pluginfileUrl: pluginfileUrl,
                         objectType: null,
                         width: "100%",
-                        height: Math.round(win.height() - 60), // Embedded object height in modal - make as high as poss.
+                        height: Math.round(win.height() - 110), // Embedded object height in modal - make as high as poss.
                         cmid: cmId,
                         tileid: sectionNum,
                         isediting: 0,
