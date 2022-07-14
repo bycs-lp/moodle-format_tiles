@@ -325,12 +325,36 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                     page.stop();
                 });
 
-                page.animate({scrollTop: scrollTo}, "slow", "swing", function () {
-                    // Animation complete, remove stop handler.
-                    page.off(events, function () {
-                        page.stop();
+                let elementToScrollTo;
+                if (window.location.href.match('.*#[^&?]+$')) {
+                    // We check if the URL has an anchor specified and if it has the correct form:
+                    // At the end of the URL there has to be a '#' symbol followed by a string not containing a '&' or '?' symbol.
+
+                    // After the regex check this will always work.
+                    const anchorName = window.location.href.split('#')[1];
+
+                    // Let's find the element associated with the anchor name specified in the url.
+                    elementToScrollTo = document.querySelector('#' + anchorName);
+
+                    if (!elementToScrollTo) {
+                        // If we could not find the element with anchorName as id attribute, we try to look for
+                        // anchorName as name attribute.
+                        elementToScrollTo = document.querySelector('[name="' + anchorName + '"');
+                    }
+                }
+
+                if (elementToScrollTo) {
+                    // If we have found an element to scroll to, because an anchor has been specified in the url, we scroll it
+                    // into view instead of scrolling to the specified section tile.
+                    elementToScrollTo.scrollIntoView();
+                } else {
+                    page.animate({scrollTop: scrollTo}, "slow", "swing", function () {
+                        // Animation complete, remove stop handler.
+                        page.off(events, function () {
+                            page.stop();
+                        });
                     });
-                });
+                }
                 sectionIsOpen = true;
                 openTile = tileId;
 
