@@ -315,7 +315,8 @@ class format_tiles_external extends external_api
      * @throws moodle_exception
      */
     public static function get_single_section_page_html($courseid, $sectionid, $setjsusedsession = false) {
-        global $PAGE, $SESSION;
+        global $PAGE, $SESSION, $OUTPUT;
+
         $params = self::validate_parameters(
             self::get_single_section_page_html_parameters(),
             array(
@@ -334,11 +335,17 @@ class format_tiles_external extends external_api
         $course = get_course($params['courseid']);
         $renderer = $PAGE->get_renderer('format_tiles');
         $templateable = new \format_tiles\output\course_output($course, true, $params['sectionid']);
+
+        $PAGE->set_url('/');
+        $OUTPUT->header();
+        $PAGE->start_collecting_javascript_requirements();
+
         $data = $templateable->export_for_template($renderer);
         $data['showsinglesectionlegacynav'] = !$setjsusedsession;
         $template = $params['sectionid'] == 0 ? 'format_tiles/section_zero' : 'format_tiles/single_section';
         $result = array(
-            'html' => $renderer->render_from_template($template, $data)
+            'html' => $renderer->render_from_template($template, $data),
+            'js' => $PAGE->requires->get_end_code()
         );
         // This session var is used later, when user revisits main course page, or a single section, for a course using this format.
         // If set to true, the page can safely be rendered from PHP in the javascript friendly format.
@@ -381,7 +388,8 @@ class format_tiles_external extends external_api
     public static function get_single_section_page_html_returns () {
         return new external_single_structure(
             array(
-                'html' => new external_value(PARAM_RAW, 'HTML for the single section (tile contents)')
+                'html' => new external_value(PARAM_RAW, 'HTML for the single section (tile contents)'),
+                'js' => new external_value(PARAM_RAW, 'JS for the single section (tile contents)'),
             )
         );
     }

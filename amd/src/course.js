@@ -579,13 +579,13 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
 
                 // Still contact the server in case content has changed (e.g. restrictions now satisfied).
                 getSectionContentFromServer(courseId, dataSection).done(function (response) {
-                    setCourseContentHTML(relatedContentArea, $(response.html).html());
+                    setCourseContentHTML(relatedContentArea, $(response.html).html() + response.js);
                 });
             } else {
                 relatedContentArea.html(loadingIconHtml);
                 // Get from server.
                 getSectionContentFromServer(courseId, dataSection).done(function (response) {
-                    setCourseContentHTML(relatedContentArea, $(response.html).html());
+                    setCourseContentHTML(relatedContentArea, $(response.html).html() + response.js);
                     expandSection(relatedContentArea, dataSection);
                 }).fail(function (failResult) {
                     failedLoadSectionNotify(dataSection, failResult, relatedContentArea);
@@ -683,7 +683,7 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                                 getSectionContentFromServer(courseId, dataSection + 1).done(function(response) {
                                     setCourseContentHTML(
                                         nextSecIfExists,
-                                        $(response.html).html()
+                                        $(response.html).html() + response.js
                                     );
                                 });
                             }
@@ -776,7 +776,10 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         ]);
                         requests[0]
                             .done((response) => {
-                                setCourseContentHTML($(Selector.SECTION_ID + data.section), $(response.html).html());
+                                setCourseContentHTML(
+                                    $(Selector.SECTION_ID + data.section),
+                                    $(response.html).html() + response.js
+                                );
                             })
                             .catch(err => {
                                 require(["core/log"], function(log) {
