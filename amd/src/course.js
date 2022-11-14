@@ -71,10 +71,6 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             LAUNCH_STANDARD: '[data-action="launch-tiles-standard"]',
             MANUAL_COMPLETION: '[data-action="toggle-manual-completion"]',
             TOOLTIP: "[data-toggle=tooltip]",
-            HEADER_BAR: ["header.navbar", "nav.fixed-top.navbar", "#essentialnavbar.moodle-has-zindex", "#navwrap",
-                "nav.navbar-fixed-top", "#adaptable-page-header-wrapper"],
-            // We try several different selectors for header bar as it varies between theme.
-            // (Boost based, clean based, essential etc).
             MATHJAX_EQUATION: ".filter_mathjaxloader_equation"
         };
         var ClassNames = {
@@ -232,7 +228,6 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                                 setTimeout(function () {
                                     // Allow very short delay so we dont skip forward on the basis of our last key press.
                                     contentArea.find(Selector.SECTION_TITLE).focus();
-                                    // page.animate({scrollTop: contentArea.offset().top - HEADER_BAR_HEIGHT}, "slow");
                                     contentArea.find(Selector.SECTION_BUTTONS).css("top", "");
                                 }, 200);
                             }

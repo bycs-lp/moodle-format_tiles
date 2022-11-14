@@ -68,6 +68,7 @@ class format_tiles extends core_courseformat\base {
     }
 
     /**
+     * Returns true if this course format uses activity indentation.
      * @return bool
      */
     public function uses_indentation(): bool {
@@ -140,6 +141,7 @@ class format_tiles extends core_courseformat\base {
     }
 
     /**
+     * Returns true if this course format is compatible with content components
      * @return bool
      */
     public function supports_components() {
@@ -312,7 +314,7 @@ class format_tiles extends core_courseformat\base {
         for ($i = 1; $i <= 10; $i++) {
             $colourname = get_config('format_tiles', 'colourname' . $i);
             $tilecolour = get_config('format_tiles', 'tilecolour' . $i);
-            if ($tilecolour != '' and $tilecolour != '#000') {
+            if ($tilecolour != '' && $tilecolour != '#000') {
                 $palette[$tilecolour] = $colourname;
             }
         }

@@ -30,8 +30,8 @@ use format_tiles\tile_photo;
 /**
  * Base class to render a course section.
  *
- * @package   core_courseformat
- * @copyright 2020 Ferran Recio <ferran@moodle.com>
+ * @package   format_tiles
+ * @copyright 2022 David Watson
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class section extends section_base {

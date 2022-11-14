@@ -323,3 +323,18 @@ Other
 - Use $mod->has_custom_cmlist_item() if Tiles should display a course module inline like label (issue 97)
 - Avoid PHP8 error on section edit
 - Minor theme compatibility fixes
+
+4.0.0.5 BETA (2022091501)
+=========================
+- Fix empty activities caused by core change MDL-74800 (Moodle core commit #68b3f1, merged in core version 4.0.2+ (Build: 20220805)).
+- Update format.js to follow current core version.
+- Typos and comments.
+
+4.0.0.7 BETA (2022091503)
+=========================
+- Fix issue with format_tiles\output\courseformat\content\sectionnavigation constructor.
+- Remove MOODLE_INTERNAL where no longer required.
+
+4.0.0.8 BETA (2022091700)
+=========================
+- Remove unnecessary override of core_courseformat\output\local\content\sectionselector (constructor mismatch).

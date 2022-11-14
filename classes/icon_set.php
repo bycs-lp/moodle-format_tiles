@@ -23,8 +23,6 @@
 
 namespace format_tiles;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Icon set class for format tiles.
  * @package    format_tiles

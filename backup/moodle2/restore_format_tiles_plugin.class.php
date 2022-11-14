@@ -23,8 +23,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 define('FILTER_NONE', 0);
 define('FILTER_NUMBERS_ONLY', 1);
 define('FILTER_OUTCOMES_ONLY', 2);

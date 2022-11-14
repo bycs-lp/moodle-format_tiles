@@ -35,8 +35,7 @@ require_once("$CFG->libdir/resourcelib.php");  // To import RESOURCELIB_DISPLAY_
  * @copyright 2018 David Watson
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class course_output implements \renderable, \templatable
-{
+class course_output implements \renderable, \templatable {
 
     /**
      * Course object for this class
@@ -227,7 +226,7 @@ class course_output implements \renderable, \templatable
 
     /**
      * Temporary function for Moodle 4.0 upgrade - todo to be replaced.
-     * @param $section
+     * @param object $section
      * @return string
      */
     private function temp_format_summary_text($section) {
@@ -242,7 +241,7 @@ class course_output implements \renderable, \templatable
 
     /**
      * Temporary function for Moodle 4.0 upgrade - todo to be replaced.
-     * @param $section
+     * @param object $section
      * @return void
      * @throws \coding_exception
      */
@@ -254,7 +253,7 @@ class course_output implements \renderable, \templatable
 
     /**
      * Temporary function for Moodle 4.0 upgrade - todo to be replaced.
-     * @param $section
+     * @param object $section
      * @return bool|string
      * @throws \coding_exception
      */
@@ -266,7 +265,7 @@ class course_output implements \renderable, \templatable
 
     /**
      * Temporary function for Moodle 4.0 upgrade - todo to be replaced.
-     * @param $mod
+     * @param object $mod
      * @return bool|string
      * @throws \coding_exception
      */

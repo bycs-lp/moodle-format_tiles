@@ -23,7 +23,6 @@
 
 namespace format_tiles;
 
-defined('MOODLE_INTERNAL') || die();
 /**
  * Tile photo class for format tiles.
  * @package    format_tiles

@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Which course modules is the site administrator allowing to be displayed in a modal?
  * @return array the permitted modules including resource types e.g. page, pdf, HTML

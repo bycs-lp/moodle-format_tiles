@@ -68,7 +68,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
         const CLASS = {
             COMPLETION_ENABLED: "completion-enabled",
             COMPLETION_MANUAL: "completion-manual",
-            COMPLETION_AUTO: "completion-auto",// e.g. grade based.
+            COMPLETION_AUTO: "completion-auto", // E.g. grade based.
             COMPLETION_VIEW: "completion-view",
             COMPLETION_CHECK_BOX: "completioncheckbox"
         };
@@ -183,7 +183,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
 
                 }).fail(Notification.exception);
                 // Render the modal header / title and set it to the page.
-                renderModalHeader(clickedCmObject, modalRoot, templateData.pluginfileUrl,true, true);
+                renderModalHeader(clickedCmObject, modalRoot, templateData.pluginfileUrl, true, true);
 
                 return true;
             });
@@ -346,8 +346,8 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
          * @param {object} clickedCmObject
          * @param {object} modalRoot
          * @param {string} pluginfileUrl
-         * @param {bool} showDownload
-         * @param {bool} showNewWindow
+         * @param {boolean} showDownload
+         * @param {boolean} showNewWindow
          */
         const renderModalHeader = function(clickedCmObject, modalRoot, pluginfileUrl, showDownload, showNewWindow) {
             const sectionNum = clickedCmObject.closest(Selector.sectionMain).attr("data-section");
@@ -475,7 +475,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                         cmid: cmid
                     }
                 }])[0].done(function(response) {
-                    renderModalHeader(clickedCmObject, modalRoot,'',false, false);
+                    renderModalHeader(clickedCmObject, modalRoot, '', false, false);
                     modal.setBody(response.html);
 
                     return true;

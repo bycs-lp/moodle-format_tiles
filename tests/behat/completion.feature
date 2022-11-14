@@ -1,7 +1,8 @@
 @format @format_tiles @format_tiles_completion @javascript
 
 # TODO these tests are failing as core_course/manual_completion_toggle JS is not being required from mustache despite being present in course/templates/completion_manual.mustache
-#Feature: Progress indicators can be used to change progress status and changes are reflected in database
+
+Feature: Progress indicators can be used to change progress status and changes are reflected in database (without subtiles)
 #
 #  Background:
 #    Given the following "users" exist:
@@ -60,7 +61,9 @@
 #      | usejavascriptnav       | 1        | format_tiles |
 #
 #  @javascript
-#  Scenario: Log in as student and check/uncheck activities - results correctly reach database
+  Scenario: Log in as student and check/uncheck activities - results correctly reach database
+    Empty
+  # todo delete the empty line and reinstate / fix all scenarios.
 #    When I log in as "student1"
 #    And format_tiles progress indicator is showing as "percent" for course "Course 1"
 #    And I am on "Course 1" course homepage

@@ -695,17 +695,17 @@ body.jsenabled.format-tiles #collapsiblesec0 {
     color: #fff;
 }
 .format-tiles .completioncheckbox.complete {
-    background-color: #298A08;
+    background-color: #298a08;
     color: #fff;
-    border-color: #298A08;
+    border-color: #298a08;
 }
 .format-tiles .completioncheckbox.fail {
     background-color: #a90202;
     color: #fff;
-    border-color: #A90202FF;
+    border-color: #a90202ff;
 }
 .format-tiles .modal-header .completioncheckbox:not(.complete) {
-    border: 2px solid #ffffffaa;
+    border: 2px solid #ffffffa8;
     color: #fff;
     background-color: #efefef;
 }
@@ -790,7 +790,7 @@ body.format-tiles.jsenabled .course-content .headerabovetiles {
     line-height: 1.2em;
     font-weight: normal;
     color: #333;
-    word-wrap: break-word
+    word-wrap: break-word;
 }
 .format-tiles.theme-snap ul.tiles .tile h3,
 .format-tiles.theme-snap ul.tiles .subtile h4,
@@ -895,6 +895,7 @@ body.format-tiles.jsenabled .course-content .headerabovetiles {
 .format-tiles.path-course-view #region-main {
     overflow-x: visible;
 }
+
 @media screen and (max-width: 680px) {
     .format-tiles li.activity.subtile {
         /* stylelint-disable-next-line declaration-no-important */
@@ -1962,7 +1963,7 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
 
 .format-tiles li.section:not(#section-0) .course-section-header {
     margin-right: 5px;
-    background-color: #3584C917;
+    background-color: #3584c917;
     border-top: 3px solid rgba(53, 132, 201, 0.37);
     width: 100%;
     padding: 10px;
@@ -2012,14 +2013,15 @@ allow tiles to be taller and thinner so can fit two side by side in portrait on 
     background-color: #565656;
 }
 .format-tiles .tile.tile-hidden.phototile a,
-.format-tiles .tile.tile-restricted.phototile a{
+.format-tiles .tile.tile-restricted.phototile a {
     background-color: rgba(255, 255, 255, 0.7);
 }
 .format-tiles .tile.tile-restricted.phototile,
 .format-tiles .tile.tile-hidden.phototile {
     filter: grayscale(1);
 }
-.format-tiles .tile, .format-tiles .moveablesection {
+.format-tiles .tile,
+.format-tiles .moveablesection {
     z-index: 2;
 }
 .format-tiles .tile:not(.phototile) {

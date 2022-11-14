@@ -38,8 +38,7 @@ require_once($CFG->dirroot . '/course/format/tiles/locallib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @since      Moodle 3.3
  */
-class format_tiles_external extends external_api
-{
+class format_tiles_external extends external_api {
     /**
      * Teacher is changing the icon for a course section or whole course using AJAX
      * @param Integer $courseid the id of this course
