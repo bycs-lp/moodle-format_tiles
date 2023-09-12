@@ -89,6 +89,8 @@ class content extends content_base {
                     'icon' => 'exclamation-triangle', 'class' => 'warning'
                 ];
             }
+            $bulkedittools = new $this->bulkedittoolsclass($this->format);
+            $data->bulkedittools = $bulkedittools->export_for_template($output);
         }
 
         return $data;
