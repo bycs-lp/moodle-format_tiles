@@ -142,45 +142,6 @@ class format_tiles extends core_courseformat\base {
         return true;
     }
 
-    /**
-     * The URL to use for the specified course (with section)
-     *
-     * @param int|stdClass $section Section object from database or just field course_sections.section
-     *     if omitted the course view page is returned
-     * @param array $options options for view URL. At the moment core uses:
-     *     'navigation' (bool) if true and section has no separate page, the function returns null
-     *     'sr' (int) used by multipage formats to specify to which section to return
-     * @return null|moodle_url
-     * @throws moodle_exception
-     */
-    public function get_view_url($section, $options = []) {
-        $course = $this->get_course();
-        $url = new moodle_url('/course/view.php', ['id' => $course->id]);
-
-        $sr = null;
-        if (array_key_exists('sr', $options)) {
-            $sr = $options['sr'];
-        }
-        if (is_object($section)) {
-            $sectionno = $section->section;
-        } else {
-            $sectionno = $section;
-        }
-        if ($sectionno !== null) {
-            if ($sr) {
-                $sectionno = $sr;
-            }
-            if ($sectionno != 0) {
-                $url->param('section', $sectionno);
-            } else {
-                if (!empty($options['navigation'])) {
-                    return null;
-                }
-                $url->set_anchor('section-' . $sectionno);
-            }
-        }
-        return $url;
-    }
 
     /**
      * Returns the information about the ajax support in the given source format
