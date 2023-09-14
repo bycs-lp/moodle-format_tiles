@@ -1340,6 +1340,7 @@ body.jsenabled.format-tiles #collapsiblesec0 {
     width: 30px;
 }
 .format-tiles .embed_cm_modal .embed_file_button,
+.format-tiles .embed_cm_modal .button_toggle_fullwidth,
 .format-tiles .modal-container .modal .modal-header button.close {
     display: inline-block;
     width: 28px;
@@ -1353,6 +1354,9 @@ body.jsenabled.format-tiles #collapsiblesec0 {
     opacity: 0.9;
     text-align: center;
     box-shadow: none;
+}
+.format-tiles .embed_cm_modal .button_toggle_fullwidth {
+    padding-top: 0.25rem;
 }
 .format-tiles .modal-container .modal .modal-header button.close {
     font-size: 1.8em;
