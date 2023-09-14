@@ -1362,8 +1362,10 @@ body.jsenabled.format-tiles #collapsiblesec0 {
     width: 30px;
 }
 .format-tiles .embed_cm_modal .embed_file_button,
+.format-tiles .embed_cm_modal .button_toggle_fullwidth,
 .format-tiles .modal-container .modal .modal-header button.btn-close {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     width: 28px;
     height: 28px;
     font-size: 1.4em;
