@@ -255,6 +255,7 @@ $string['modalmodules_desc'] = 'Launch these course modules in a modal window.  
 $string['modalresources'] = 'Modal resources ';
 $string['modalresources_desc'] = 'Launch these resources in modal window.  Note: if allowed here, URL activities will only open in a modal window if they are set to {$a->displayembed} at the activity level (e.g. YouTube or Vimeo videos).  Even then, they may be blocked by the website owner from showing embedded - see {$a->link}';
 $string['newactivities'] = 'New';
+$string['modaltogglefullwidth'] = 'Toggle full width';
 $string['nexttopic'] = 'Next topic';
 $string['nojswarning'] = 'Your browser does not seem to support JavaScript, or it is disabled.  An enhanced interface is available if you enable Javascript';
 $string['none'] = 'None';

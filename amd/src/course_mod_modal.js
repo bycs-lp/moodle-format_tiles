@@ -59,6 +59,7 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
             ACTIVITY: "li.activity",
             URLACTIVITYPOPUPLINK: ".activity.modtype_url.urlpopup a",
             newWindowButton: ".button_expand",
+            toggleFullWidthButton: ".button_toggle_fullwidth",
             modalHeader: ".modal-header",
             embedModuleButtons: ".embed-module-buttons",
             iframe: "iframe"
@@ -413,12 +414,44 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                         }, 300);
                     });
                 });
+                registerModalFullWidthToggler(modalRoot);
+
             }).fail(Notification.exception);
 
             // Allow a short delay before we resize the modal, and check a few times, as content may be loading.
             setTimeout(() => {
                 modalHeightChangeWatcher(modalRoot, 3, 1000);
             }, 500);
+        };
+
+        /**
+         * Register the handler for the button to toggle full width of the modal.
+         *
+         * @param {object} modalRoot the modal root containing the button to add the handler to
+         */
+        const registerModalFullWidthToggler = (modalRoot) => {
+            // Store original modal width.
+            const maxWidthIfNotFullWidth = modalRoot.find(Selector.modalDialog).css('max-width');
+            const toggleFullWidthButton = modalRoot.find(Selector.toggleFullWidthButton);
+
+            toggleFullWidthButton.click(() => {
+                const toggleIcon = toggleFullWidthButton.find('i');
+                if (toggleIcon.hasClass('fa-chevron-right')) {
+                    toggleIcon.removeClass('fa-chevron-right');
+                    toggleIcon.addClass('fa-chevron-left');
+                } else {
+                    toggleIcon.removeClass('fa-chevron-left');
+                    toggleIcon.addClass('fa-chevron-right');
+                }
+
+                const currentMaxWidth = modalRoot.find(Selector.modalDialog).css('max-width');
+                const newMaxWidth = currentMaxWidth !== '100%' ? '100%' : maxWidthIfNotFullWidth;
+                modalRoot.find(Selector.modalDialog).animate({"max-width": newMaxWidth}, "fast");
+                // In case we're displaying an embedded link including an iframe, we have also have to apply
+                // the new width to the body and the iframe itself.
+                modalRoot.find(Selector.modalBody).animate({"max-width": newMaxWidth}, "fast");
+                modalRoot.find("iframe").attr("width", newMaxWidth);
+            });
         };
 
         // TODO refactor these to avoid repetition.
