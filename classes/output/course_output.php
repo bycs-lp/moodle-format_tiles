@@ -930,19 +930,6 @@ class course_output implements \renderable, \templatable {
             $moduleobject['uservisible'] = $mod->is_visible_on_course_page();
             $moduleobject['clickable'] = $mod->uservisible;
         }
-        // From Moodle 3.11 onwards, we may have extra completion conditions info to display under activities.
-        if (class_exists('\core\activity_dates') && isset($this->showcompletionconditions)
-            && $this->showcompletionconditions) {
-            $activitydates = \core\activity_dates::get_dates_for_module($mod, $USER->id);
-            $completiondetails = \core_completion\cm_completion_details::get_instance(
-                $mod, $USER->id, $this->showcompletionconditions
-            );
-            if ($completiondetails->has_completion() || !empty($activitydates)) {
-                // No need to render the activity information when there's no completion info and activity dates to show.
-                $activityinfo = new \core_course\output\activity_information($mod, $completiondetails, $activitydates);
-                $moduleobject['activityinformation'] = $activityinfo->export_for_template($output);
-            }
-        }
 
         // We check that the stealth function exists in case we are running in Totara or earlier Moodle, where it doesn't.
         $isstealth = method_exists($mod, 'is_stealth') && $mod->is_stealth();
@@ -955,7 +942,7 @@ class course_output implements \renderable, \templatable {
         }
         $moduleobject['available'] = $mod->available;
         $moduleobject['cmid'] = $mod->id;
-        $moduleobject['activityname'] = $mod->get_formatted_name();
+        $moduleobject['activitynamebare'] = $mod->get_formatted_name();
         $moduleobject['modname'] = $mod->modname;
         $moduleobject['iconurl'] = $mod->get_icon_url()->out(true);
         $moduleobject['url'] = $mod->url;
@@ -1027,15 +1014,6 @@ class course_output implements \renderable, \templatable {
             || !$section->visible
         ) {
             $moduleobject['extraclasses'] .= ' dimmed';
-        }
-        if ($mod->completion == COMPLETION_TRACKING_MANUAL) {
-            $moduleobject['extraclasses'] .= " completion-enabled completion-manual";
-        } else if ($mod->completion == COMPLETION_VIEW_REQUIRED) {
-            // Auto completion with a view required.
-            $moduleobject['extraclasses'] .= " completion-enabled completion-view";
-        } else if ($mod->completion == COMPLETION_TRACKING_AUTOMATIC) {
-            // Auto completion with no view required (e.g. grade required).
-            $moduleobject['extraclasses'] .= " completion-enabled completion-auto";
         }
 
         if ($mod->modname == 'folder') {
@@ -1115,45 +1093,6 @@ class course_output implements \renderable, \templatable {
         ) {
             // If the non JS link is used, it redirects from /mod/xxx/view.php to external or pluginURL.
             $moduleobject['url'] .= '&redirect=1';
-        }
-
-        // Now completion information for the individual course module.
-        $completion = $mod->completion && $this->completioninfo && $this->completioninfo->is_enabled($mod) && $mod->available;
-        if ($completion) {
-            // Add completion icon to the course module if appropriate.
-            $moduleobject['hascompletion'] = true;
-            $completiondata = $this->completioninfo->get_data($mod, true);
-            $moduleobject['completionstate'] = $completiondata->completionstate;
-            $moduleobject['iscomplete'] = $completiondata->completionstate
-                && $completiondata->completionstate !== COMPLETION_COMPLETE_FAIL;
-            $moduleobject['completionstateInverse'] = $completiondata->completionstate == 1 ? 0 : 1;
-            if ($mod->completion == COMPLETION_TRACKING_MANUAL) {
-                $moduleobject['completionIsManual'] = 1;
-                switch ($completiondata->completionstate) {
-                    case COMPLETION_INCOMPLETE:
-                        $moduleobject['completionstring'] = get_string('togglecompletionincomplete', 'format_tiles');
-                        break;
-                    case COMPLETION_COMPLETE:
-                        $moduleobject['completionstring'] = get_string('togglecompletioncomplete', 'format_tiles');
-                        break;
-                }
-            } else { // Automatic.
-                switch ($completiondata->completionstate) {
-                    case COMPLETION_INCOMPLETE:
-                        $moduleobject['completionstring'] = get_string('complete-n-auto', 'format_tiles');
-                        break;
-                    case COMPLETION_COMPLETE:
-                        $moduleobject['completionstring'] = get_string('complete-y-auto', 'format_tiles');
-                        break;
-                    case COMPLETION_COMPLETE_PASS:
-                        $moduleobject['completionstring'] = get_string('completion-pass', 'core_completion', $mod->name);
-                        break;
-                    case COMPLETION_COMPLETE_FAIL:
-                        $moduleobject['completionstring'] = get_string('completion-fail', 'core_completion', $mod->name);
-                        $moduleobject['isfail'] = 1;
-                        break;
-                }
-            }
         }
         return $moduleobject;
     }
