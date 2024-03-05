@@ -34,7 +34,6 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
         var isMobile;
         var loadingIconHtml;
         var stringStore = [];
-        var HEADER_BAR_HEIGHT = 60; // This varies by theme and version so will be reset once pages loads below.
         var reopenLastVisitedSection = false;
         var courseId;
         var courseContextId;
@@ -358,7 +357,11 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             var expandAndScroll = function () {
                 // Scroll to the top of content bearing section
                 // we have to wait until possible reOrg and slide down totally before calling this, else co-ords are wrong.
-                var scrollTo = (tile.offset().top) - $('#section-zero-container').offset().top + HEADER_BAR_HEIGHT;
+                // Format_tiles uses a hard coded 60px height of header bar which is only true in boost. To avoid hardcoding
+                // a theme specific height of the header, we use the distance of the page container to the upper viewport border as
+                // header height.
+                const headerHeight = $(window).scrollTop() - $('#page').offset().top;
+                var scrollTo = (tile.offset().top) - $('#section-zero-container').offset().top + headerHeight;
                 if (scrollTo === $(window).scrollTop) {
                     // Scroll by at least one pixel otherwise z-index on selected tile is not changed.
                     // Until mouse moves.
