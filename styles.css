@@ -1213,6 +1213,10 @@ body.jsenabled.format-tiles #collapsiblesec0 {
 .format-tiles li.activity.label iframe {
     width: 100%;
 }
+/* Make plugins with embedded mode using iframe show full width in embedded mode */
+.format-tiles li.activity.activity-wrapper .activity-item {
+    width: 100%;
+}
 .format-tiles li.activity.subtile .activityname {
     position: absolute;
     bottom: 0;
