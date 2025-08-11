@@ -313,7 +313,8 @@ class course_output implements \renderable, \templatable {
             // If there are multiple restrictions the tooltip on the subtile then shows them all.
             $ci = new \core_availability\info_module($mod);
             $fullinfo = $ci->get_full_information();
-            return \core_availability\info::format_info($fullinfo, $this->course);
+            // We use strip_tags as we display the HTML in a title attribute.
+            return strip_tags(\core_availability\info::format_info($fullinfo, $this->course));
         }
         $availabilityclass = $this->format->get_output_classname('content\\cm\\availability');
         $availability = new $availabilityclass(
