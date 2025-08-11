@@ -304,6 +304,7 @@ class course_output implements \renderable, \templatable {
         } else if (!$section->visible) {
             return get_string('hiddenfromstudents');
         }
+        return null;
     }
 
     /**
