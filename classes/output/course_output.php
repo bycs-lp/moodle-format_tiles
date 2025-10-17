@@ -819,6 +819,7 @@ class course_output implements \renderable, \templatable {
      * @throws \moodle_exception
      */
     protected function section_course_mods($section, $output): object {
+        global $CFG;
         $result = (object)['mods' => [], 'jsfooter' => ''];
         if (!isset($section->section)) {
             debugging("section->section is not set", DEBUG_DEVELOPER);
@@ -835,6 +836,9 @@ class course_output implements \renderable, \templatable {
         $previouswaslabel = false;
         foreach ($cmids as $index => $cmid) {
             $mod = $this->modinfo->get_cm($cmid);
+            if ($CFG->branch >= 500 && !$mod->is_of_type_that_can_display()) {
+                continue;
+            }
             if ($mod->deletioninprogress) {
                 continue;
             }
