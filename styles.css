@@ -563,8 +563,6 @@
 .format-tiles .sectionbutton .icon {
     font-size: 1.4em;
     margin-right: 0;
-    width: 20px;
-    height: 20px;
 }
 .format-tiles .sectionbutton .icon.fa-home {
     font-size: 1.3em;
