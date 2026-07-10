@@ -1062,6 +1062,9 @@ body.jsenabled.format-tiles #collapsiblesec0 {
 .format-tiles li.section:not(#section-0) .course-section-header img.icon {
     max-width: 45px;
     max-height: 45px;
+    margin-right: 0;
+    width: auto;
+    height: auto;
 }
 #page-course-editsection .format-tiles .icon_picker_modal .modal-header,
 #page-course-edit .format-tiles .icon_picker_modal .modal-header {
