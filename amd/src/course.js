@@ -370,22 +370,15 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
 
             /**
              * Need to adjust the height of the overlay to ensure it covers full height of expanded section.
-             * The element height we need to match varies depending on Moodle version.
-             * For Moodle 4.3+ we can use #page.  For Moodle 4.0/4.2 use #topofscroll.
-             * Not all themes may have #topofscroll (e.g. Adaptable) so also use fallback.
              * Quickly show content area and close all others to grab full height before reverting that for animation.
              */
             const setOverlayHeight = () => {
-                const footerHeight = $('#page-footer').outerHeight() ?? 0;
                 $('li.section.state-visible').hide();
                 contentArea.show();
-                const heights = [
-                    $('#page').outerHeight() ?? 0,
-                    ($('#topofscroll.main-inner').outerHeight() ?? 0) + ($('#page-header').outerHeight() ?? 0),
-                    $('#page-content').outerHeight() ?? 0
-                ];
+                // scrollHeight covers the whole document, including any block regions rendered below #page.
+                const contentHeight = document.body.scrollHeight;
                 contentArea.hide();
-                overlay.css('min-height', `${Math.ceil(Math.max(...heights)) + footerHeight + 20}px`);
+                overlay.css('min-height', `${Math.ceil(contentHeight) + 20}px`);
             };
 
             var expandAndScroll = function () {
