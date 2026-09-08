@@ -40,21 +40,24 @@
         "initialicon": "puzzle-piece"
     }
 }}
-{{#photourl}}
-    <span class="tilebarphoto" id="selectedicon">
-         <img src="{{photourl}}" title="{{photoname}}" alt="{{photoname}}" style="height: 60px;">
-    </span>
-{{/photourl}}
-{{^photourl}}
-    {{#initialicon}}
-        <span id="selectedicon" title="{{initialname}}">
-            {{#pix}}tileicon/{{initialicon}}, format_tiles, {{initialname}}{{/pix}}
+
+<div class="d-flex align-items-center gap-2">
+    {{#photourl}}
+        <span class="tilebarphoto" id="selectedicon">
+             <img src="{{photourl}}" title="{{photoname}}" alt="{{photoname}}" style="height: 60px;">
         </span>
-    {{/initialicon}}
-{{/photourl}}
-<button id="launchiconpicker" class="btn btn-secondary cursorpointer" data-tiles-action="launch-tiles-icon-picker" data-true-sectionid="{{sectionId}}">
-    <span>
-        {{^allowphototiles}}{{#str}}picknewicon, format_tiles{{/str}}{{/allowphototiles}}
-        {{#allowphototiles}}{{#str}}picknewiconphoto, format_tiles{{/str}}{{/allowphototiles}}
-    </span>
-</button>
+    {{/photourl}}
+    {{^photourl}}
+        {{#initialicon}}
+            <span id="selectedicon" title="{{initialname}}">
+                {{#pix}}tileicon/{{initialicon}}, format_tiles, {{initialname}}{{/pix}}
+            </span>
+        {{/initialicon}}
+    {{/photourl}}
+    <button id="launchiconpicker" class="btn btn-secondary cursorpointer" data-tiles-action="launch-tiles-icon-picker" data-true-sectionid="{{sectionId}}">
+        <span>
+            {{^allowphototiles}}{{#str}}picknewicon, format_tiles{{/str}}{{/allowphototiles}}
+            {{#allowphototiles}}{{#str}}picknewiconphoto, format_tiles{{/str}}{{/allowphototiles}}
+        </span>
+    </button>
+</div>

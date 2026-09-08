@@ -172,6 +172,30 @@ define(["jquery", "core/templates", "core/ajax", "core/str", "core/notification"
                         });
                 });
             };
+
+            var changeIcon = (imageUrl) => {
+                // We are changing the icon using a drop down menu not the icon picker modal.
+                // For the whole course.
+                // Select new icon in drop down.
+                var selectBox = $("#id_defaulttileicon"); // Valid if page type is course-edit.
+                selectBox.val(icon);
+                // Then change the image shown next to it.
+                if (imageType === "tileicon") {
+                    Templates.renderPix("tileicon/" + icon, "format_tiles", displayname)
+                        .done(function (newIcon) {
+                            selectedIcon.html(newIcon);
+                        });
+                } else if (imageType === "tilephoto") {
+                    // We are changing a tile photo.
+                    changeUiTilePhoto($("#tileicon_" + sectionNum), imageUrl, imageType);
+                }
+            };
+
+            if (!courseId) {
+                changeIcon('');
+                return;
+            }
+
             var ajaxIconPickArgs = {
                 image: icon,
                 courseid: courseId,
@@ -194,24 +218,10 @@ define(["jquery", "core/templates", "core/ajax", "core/str", "core/notification"
                         changeUiTilePhoto($("#tileicon_" + sectionNum), response.imageurl, imageType);
                         if (response.imageurl === '') {
                             // We are resetting tile.  Refresh photo library as image may be deleted now.
-                            getAndStoreIconSet(courseId);
+                            getAndStoreIconSet(courseId, null);
                         }
                     } else if (pageType === "course-edit") {
-                        // We are changing the icon using a drop down menu not the icon picker modal.
-                        // For the whole course.
-                        // Select new icon in drop down.
-                        var selectBox = $("#id_defaulttileicon"); // Valid if page type is course-edit.
-                        selectBox.val(icon);
-                        // Then change the image shown next to it.
-                        if (imageType === "tileicon") {
-                            Templates.renderPix("tileicon/" + icon, "format_tiles", displayname)
-                                .done(function (newIcon) {
-                                    selectedIcon.html(newIcon);
-                                });
-                        } else if (imageType === "tilephoto") {
-                            // We are changing a tile photo.
-                            changeUiTilePhoto($("#tileicon_" + sectionNum), response.imageurl, imageType);
-                        }
+                        changeIcon(response.imageUrl);
                     }
                 } else {
                     require(["core/log"], function(log) {
