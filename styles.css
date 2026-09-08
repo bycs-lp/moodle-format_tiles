@@ -1560,9 +1560,6 @@ body.jsenabled.format-tiles #collapsiblesec0 {
     height: 25px;
     color: grey;
 }
-.format-tiles #selectedicon {
-    margin-right: 10px;
-}
 .format-tiles .modal-header:focus,
 .format-tiles .resourcecontent:focus,
 .format-tiles li.activity.subtile {
