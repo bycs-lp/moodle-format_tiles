@@ -13,19 +13,27 @@
 
 {{#hasabovetilescontrols}}
     <div class="btn-group align-top">
-        <button type="button" class="sectionbutton align-top" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{{#str}}controls, format_tiles{{/str}}">
+        <button type="button" class="sectionbutton align-top" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false" title="{{#str}}controls, format_tiles{{/str}}">
             <span class="d-flex justify-content-center align-items-center h-100">
                 <i class="icon fa fa-ellipsis-h fa-fw m-0" aria-hidden="true"></i>
             </span>
         </button>
-        <div class="dropdown-menu dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-end">
             {{#abovetilescontrols}}
-                <a class="dropdown-item" href="{{{url}}}">
-                    <div class="custom-control custom-switch{{#checked}} checked{{/checked}}">
-                        <span class="custom-control-label">{{label}}</span>
-                    </div>
-                </a>
+                <div class="dropdown-item-text text-nowrap">
+                    {{< core/toggle}}
+                        {{$id}}
+                            {{id}}{{$idsuffix}}{{/idsuffix}}
+                        {{/id}}
+                    {{/ core/toggle}}
+                </div>
             {{/abovetilescontrols}}
         </div>
     </div>
 {{/hasabovetilescontrols}}
+
+{{#js}}
+    require(['format_tiles/above_tiles_controls'], function(controls) {
+        controls.init();
+    });
+{{/js}}

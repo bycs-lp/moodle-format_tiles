@@ -45,7 +45,9 @@
     {{! on xs devices, show buttons separately at top }}
     <div class="d-block d-sm-none">
         <div class="above-tiles-buttons text-end{{^section_zero_show}} section-zero-empty{{/section_zero_show}}">
-            {{>format_tiles/above_tiles_buttons}}
+            {{< format_tiles/above_tiles_buttons}}
+                {{$idsuffix}}-xs{{/idsuffix}}
+            {{/ format_tiles/above_tiles_buttons}}
         </div>
     </div>
     <div class="row">
@@ -53,7 +55,9 @@
         <div class="col-sm-1 d-none d-sm-block">
             {{! on sm and larger devices, show buttons to right of sec zero }}
             <div class="above-tiles-buttons text-end{{^section_zero_show}} section-zero-empty{{/section_zero_show}}">
-                {{>format_tiles/above_tiles_buttons}}
+                {{< format_tiles/above_tiles_buttons}}
+                    {{$idsuffix}}-sm{{/idsuffix}}
+                {{/ format_tiles/above_tiles_buttons}}
             </div>
         </div>
     </div>

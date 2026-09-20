@@ -1144,20 +1144,30 @@ class course_output implements \renderable, \templatable {
         $courseurl = '/course/view.php';
         $courseurlparams = ['id' => $this->course->id, 'sesskey' => sesskey()];
         if ($jsnavadminallowed) {
+            $url = new \moodle_url($courseurl, array_merge($courseurlparams, ['format-tiles-action' => 'toggleanimatednav']));
             $controls[] = [
-                'url' => new \moodle_url($courseurl, array_merge($courseurlparams, ['format-tiles-action' => 'toggleanimatednav'])),
+                'id' => 'format-tiles-control-animatednav',
                 'label' => get_string('jsactivate', 'format_tiles'),
                 'checked' => $usingjsnav,
+                'extraattributes' => [
+                    'name' => 'data-format-tiles-control-url',
+                    'value' => $url->out(false),
+                ]
             ];
         }
         if (get_config('format_tiles', 'highcontrastmodeallow')) {
+            $url = new \moodle_url(
+                $courseurl,
+                array_merge($courseurlparams, ['format-tiles-action' => 'togglehighcontrast'])
+            );
             $controls[] = [
-                'url' => new \moodle_url(
-                    $courseurl,
-                    array_merge($courseurlparams, ['format-tiles-action' => 'togglehighcontrast'])
-                ),
+                'id' => 'format-tiles-control-highcontrast',
                 'label' => get_string('highcontrastmode', 'format_tiles'),
                 'checked' => \format_tiles\local\util::using_high_contrast(),
+                'extraattributes' => [
+                    'name' => 'data-format-tiles-control-url',
+                    'value' => $url->out(false),
+                ]
             ];
         }
         return $controls;
