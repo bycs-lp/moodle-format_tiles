@@ -143,6 +143,51 @@ final class format_tiles_externallib_test extends \externallib_advanced_testcase
         $result = \core_external\external_api::clean_returnvalue(\format_tiles\external\external::set_image_returns(), $result);
     }
 
+    #[\PHPUnit\Framework\Attributes\Group('baseline')]
+    /**
+     * A non-editing teacher must not change tile images.
+     * @covers \format_tiles\external\external::set_image
+     */
+    public function test_set_image_rejects_non_editing_teacher(): void {
+        $this->resetAfterTest();
+        $course = self::getDataGenerator()->create_course($this->tilescourseformatoptions);
+        $teacher = self::getDataGenerator()->create_and_enrol($course, 'teacher');
+        $sectionid = get_fast_modinfo($course)->get_section_info_all()[1]->id;
+        $this->setUser($teacher);
+        $this->assertTrue(has_capability('moodle/course:viewhiddenactivities', \context_course::instance($course->id)));
+
+        try {
+            \format_tiles\external\external::set_image($course->id, $sectionid, 'number_1', 'tileicon');
+            $this->fail('Expected required_capability_exception');
+        } catch (\required_capability_exception $e) {
+            $this->assertSame('nopermissions', $e->errorcode);
+        }
+        $this->assertEmpty(
+            \format_tiles\local\format_option::get($course->id, \format_tiles\local\format_option::OPTION_SECTION_ICON, $sectionid)
+        );
+    }
+
+    #[\PHPUnit\Framework\Attributes\Group('baseline')]
+    /**
+     * An editing teacher can still change tile images.
+     * @covers \format_tiles\external\external::set_image
+     */
+    public function test_set_image_allows_editing_teacher(): void {
+        $this->resetAfterTest();
+        $course = self::getDataGenerator()->create_course($this->tilescourseformatoptions);
+        $teacher = self::getDataGenerator()->create_and_enrol($course, 'editingteacher');
+        $sectionid = get_fast_modinfo($course)->get_section_info_all()[1]->id;
+        $this->setUser($teacher);
+
+        $result = \format_tiles\external\external::set_image($course->id, $sectionid, 'number_1', 'tileicon');
+
+        $this->assertTrue($result['status']);
+        $this->assertEquals(
+            'number_1',
+            \format_tiles\local\format_option::get($course->id, \format_tiles\local\format_option::OPTION_SECTION_ICON, $sectionid)
+        );
+    }
+
 
     /**
      * Test the setting of a session screen width variable using the web service.

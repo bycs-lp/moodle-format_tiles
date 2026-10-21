@@ -105,7 +105,7 @@ class external extends external_api {
 
         $context = context_course::instance($data['courseid']);
         self::validate_context($context);
-        require_capability('moodle/course:viewhiddenactivities', $context); // This allows non-editing teachers for the course.
+        require_capability('moodle/course:update', $context);
 
         switch ($data['imagetype']) {
             case 'tileicon':
