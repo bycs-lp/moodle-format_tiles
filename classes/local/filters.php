@@ -157,7 +157,8 @@ class filters {
 
     /**
      * Get an array of all the Outcomes set for this course by the teacher, so that they can
-     * be attached to individual Tiles, and then used to filter tiles by Outcome
+     * be attached to individual Tiles, and then used to filter tiles by Outcome.
+     * The names are already passed through format_string(), so they are safe to output as HTML.
      * @see get_filter_outcome_buttons()
      * @see course_format_options() and the displayfilterbar option
      * @param int $courseid
@@ -169,8 +170,13 @@ class filters {
             require_once($CFG->libdir . '/gradelib.php');
             $outcomes = [];
             $outcomesfull = \grade_outcome::fetch_all_available($courseid);
+            if ($courseid > 0) {
+                $context = \context_course::instance($courseid);
+            } else {
+                $context = \context_system::instance();
+            }
             foreach ($outcomesfull as $outcome) {
-                $outcomes[$outcome->id] = $outcome->fullname;
+                $outcomes[$outcome->id] = format_string($outcome->fullname, true, ['context' => $context]);
             }
             asort($outcomes);
             return $outcomes;

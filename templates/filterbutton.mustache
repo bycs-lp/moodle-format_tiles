@@ -34,7 +34,7 @@
         * id - id number of the filter button
         * buttonnum - sequence number of the button
         * sections - which sections it relate to when pressed
-        * title - what to display on the button
+        * title - what to display on the button (already escaped by format_string, so output unescaped)
 
     Example context (json):
     {
@@ -46,5 +46,5 @@
 }}
 
 <div id="{{id}}" class="filterbutton" data-buttonid="{{buttonnum}}" data-sections="{{sections}}">
-  {{{title}}}
+    {{{title}}}
 </div>
