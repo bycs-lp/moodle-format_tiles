@@ -568,7 +568,7 @@ class format_tiles extends core_courseformat\base {
             $jsparams = [
                 'pageType' => $PAGE->pagetype,
                 'courseDefaultIcon' => $this->get_format_options()['defaulttileicon'],
-                'courseId' => $COURSE->id,
+                'courseId' => $COURSE->id == SITEID ? 0 : $COURSE->id,
                 get_config('format_tiles', 'allowphototiles'),
                 'activitydocsurl' => get_docs_url('Activity_completion_settings'),
             ];

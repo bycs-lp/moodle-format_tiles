@@ -457,20 +457,13 @@ class external extends external_api {
         // Note course id could be zero if creating new course.
 
         if ($params['courseid'] != 0) {
-            $context = context_course::instance($params['courseid']);
+            $context = \core\context\course::instance($params['courseid']);
+            self::validate_context($context);
+            require_capability('moodle/course:update', $context);
         } else {
-            $context = \context_coursecat::instance(optional_param('category', 0, PARAM_INT));
-        }
-        self::validate_context($context);
-        if (!has_capability('moodle/course:update', $context) && !has_capability('moodle/course:create', $context)) {
-            if (!has_capability('moodle/course:update', $context)) {
-                throw new required_capability_exception(
-                    $context,
-                    'moodle/course:update',
-                    "nopermissions",
-                    ""
-                );
-            } else {
+            $context = \core\context\system::instance();
+            self::validate_context($context);
+            if (!\core_course_category::has_capability_on_any('moodle/course:create')) {
                 throw new required_capability_exception(
                     $context,
                     'moodle/course:create',
@@ -485,7 +478,7 @@ class external extends external_api {
             'icons' => json_encode((new \format_tiles\local\icon_set())->available_tile_icons($params['courseid'])),
             'photos' => '',
         ];
-        if (get_config('format_tiles', 'allowphototiles')) {
+        if ($params['courseid'] != 0 && get_config('format_tiles', 'allowphototiles')) {
             $data['photos'] = json_encode(tile_photo::get_photo_library_photos($params['courseid']));
         }
         return $data;
