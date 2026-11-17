@@ -2053,6 +2053,39 @@ body.jsenabled.format-tiles #collapsiblesec0 {
     }
 }
 
+/* Boost anchors the drawers of limitedwidth pages to the edges of the limited .main-inner.
+   As tiles removes that limit (see above), the drawers would overlap the tiles, so anchor them to the viewport edges. */
+@media (min-width: 992px) {
+    body.format-tiles.limitedwidth:not(.path-mod):not(.format-tiles-single-sec) .drawer.drawer-left {
+        /* stylelint-disable declaration-no-important */
+        left: 20px !important;
+        right: auto !important;
+    }
+    body.format-tiles.limitedwidth:not(.path-mod):not(.format-tiles-single-sec) .drawer.drawer-right {
+        left: auto !important;
+        right: 20px !important;
+    }
+    body.format-tiles.limitedwidth:not(.path-mod):not(.format-tiles-single-sec) .drawer-toggles .drawer-left-toggle {
+        left: 0 !important;
+        right: auto !important;
+    }
+    body.format-tiles.limitedwidth:not(.path-mod):not(.format-tiles-single-sec) .drawer-toggles .drawer-right-toggle {
+        left: auto !important;
+        right: 0 !important;
+    }
+    /* course.js moves the overlay into #page with position absolute and width 100vw. With open drawers #page has a margin,
+       so the overlay would leave the area around the floating drawers undimmed and overflow horizontally.
+       Cover the viewport instead; the drawers (z-index 2) stay on top of it. */
+    body.format-tiles.limitedwidth:not(.path-mod):not(.format-tiles-single-sec) #format_tiles_overlay {
+        position: fixed !important;
+        inset: 0;
+        width: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        /* stylelint-enable declaration-no-important */
+    }
+}
+
 @media screen and (max-width: 680px) {
     .format-tiles .subtiles {
         /* stylelint-disable-next-line declaration-no-important */
