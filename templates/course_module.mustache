@@ -34,6 +34,7 @@
         * modname - course module name (type)
         * modnameDisplay - module name to display to user on sub tile or course mod
         * activityname - title to display on this sub tile or course mod
+        * activitynamehtml - title with quotes escaped as well, read as HTML by course_mod_modal.js
         * modtitle_inplaceeditable - in place editable version of the title
         * modresourceicon - resource icon e.g. pdf,
         * is_label - is this a label
@@ -106,7 +107,7 @@
         id="module-{{cmid}}" data-modtype="{{modname}}{{#modresourceicon}}_{{{modresourceicon}}}{{/modresourceicon}}"
         data-cmid="{{cmid}}" data-completion="{{completion}}"
         data-modinstance="{{modinstance}}" data-contextid="{{modcontextid}}"
-        data-title="{{activityname}}"
+        data-title="{{activitynamehtml}}"
         {{#modalType}}data-modal="{{modalType}}" {{/modalType}}
         {{#hascompletion}}data-completion-state="{{completionstate}}"{{/hascompletion}}
     >

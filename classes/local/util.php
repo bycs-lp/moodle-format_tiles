@@ -83,7 +83,8 @@ class util {
             'courseid' => $courseid,
             'modulecontextid' => $cm->context->id,
             'coursecontextid' => $coursecontext->id,
-            'name' => $cm->get_formatted_name(),
+            // The JS inserts the name as HTML, so quotes need escaping too for the modal templates.
+            'name' => htmlspecialchars($cm->get_formatted_name(), ENT_QUOTES, 'UTF-8', false),
             'modname' => $cm->modname,
             'sectionnumber' => $section->section,
             'sectionid' => $section->id,

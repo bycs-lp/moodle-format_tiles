@@ -37,6 +37,7 @@
         * objectType - the object type for the <object> tag's type field e.g. 'text/html'
         * width - width of the item
         * height - height of the item
+        * activityname - fully HTML-escaped activity name (incl. quotes)
 
     Example context (json):
     {
@@ -48,5 +49,5 @@
 }}
 {{#description}}<div class="p-3">{{{description}}}</div>{{/description}}
 <iframe id="resourceobject_{{id}}" src="{{config.wwwroot}}/course/format/tiles/mod_view.php?cmid={{cmid}}{{#cachebustparam}}&t={{cachebustparam}}{{/cachebustparam}}"
-    title="{{activityname}}" width="{{#width}}{{width}}{{/width}}{{^width}}800{{/width}}" height="{{#height}}{{height}}{{/height}}{{^height}}600{{/height}}">
+    title="{{{activityname}}}" width="{{#width}}{{width}}{{/width}}{{^width}}800{{/width}}" height="{{#height}}{{height}}{{/height}}{{^height}}600{{/height}}">
 </iframe>

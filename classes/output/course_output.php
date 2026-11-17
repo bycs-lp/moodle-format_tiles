@@ -570,7 +570,8 @@ class course_output implements \renderable, \templatable {
                     'tilearialabel',
                     'format_tiles',
                     trim($title)
-                        ? $title
+                        // Plain text, because the template escapes the aria-label attribute itself.
+                        ? html_entity_decode(strip_tags($title), ENT_QUOTES | ENT_HTML5)
                         : get_string('tilearialabel', 'format_tiles', $this->format->get_default_section_name($section))
                 );
                 if ($allowedphototiles && $tilestyle == self::TILE_STYLE_BOTTOM_TITLE && $isphototile) {
@@ -884,6 +885,8 @@ class course_output implements \renderable, \templatable {
         $moduleobject['cmid'] = $mod->id;
         $moduleobject['modcontextid'] = $mod->context->id;
         $moduleobject['activityname'] = $mod->get_formatted_name();
+        // The JS reads data-title and inserts it as HTML, so quotes need escaping too for the modal templates.
+        $moduleobject['activitynamehtml'] = htmlspecialchars($moduleobject['activityname'], ENT_QUOTES, 'UTF-8', false);
         $moduleobject['modname'] = $mod->modname;
         $moduleobject['url'] = $mod->url;
         $moduleobject['visible'] = $mod->visible;
@@ -928,7 +931,8 @@ class course_output implements \renderable, \templatable {
 
             $moduleobject['icon'] = [
                 'url' => $modiconurl,
-                'label' => $moduleobject['activityname'],
+                // Plain text, because the template escapes the alt attribute itself.
+                'label' => html_entity_decode($moduleobject['activityname'], ENT_QUOTES | ENT_HTML5),
                 'iconclass' => $iconclass,
             ];
             $moduleobject['tileicon'] = false; // Template is shared with top level tile, so avoiding inheriting parent icon.
